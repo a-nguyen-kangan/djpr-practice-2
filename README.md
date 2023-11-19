@@ -1,3 +1,22 @@
+# Instructions
+You need to make the application function.
+The application needs to be able to allow a user to:
+1. add a new user using the user input component
+2. add a new product using the product input component
+3. new users and products must display in the corresponding Info components
+4. clicking on a delete button will delete the user/product from the data stored
+5. (bonus) when adding a user don't allow a duplicate username
+6. (bonus) when adding a product don't allow a duplicate productId
+
+## Deliverables
+Before you start coding, read the code that is there and:
+1. Identify which component data for users and products is stored
+2. Identify where events/interactions have to be handled on the application
+3. A diagram/s showing where messages need to be sent and received.  Include the message names that you intend to use on the diagram
+
+then
+1. Complete the code
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
