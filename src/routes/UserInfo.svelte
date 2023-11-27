@@ -1,12 +1,20 @@
 <script lang="ts">
     import type { User } from '$lib/user';
-    import { Heading, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+    import { Button, Heading, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     import { CloseCircleSolid } from 'flowbite-svelte-icons';
+    import { createEventDispatcher } from 'svelte';
 
-    let users: User[] = [];
+    const dispatch = createEventDispatcher();
 
-    function deleteClickHandler() {
+    export let users: User[] = [];
+
+    function deleteClickHandler(event: any) {
         console.log("Delete button clicked");
+
+        dispatch('deleteUser', {
+            username: event.target.id
+        });
+
     }
 </script>
 
@@ -19,30 +27,14 @@
             <TableHeadCell>Last Name</TableHeadCell>
         </TableHead>
         <TableBody>
-            <TableBodyRow>
-                <TableBodyCell>jsmith</TableBodyCell>
-                <TableBodyCell>John</TableBodyCell>     
-                <TableBodyCell>Smith</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>sbrown</TableBodyCell>
-                <TableBodyCell>Sarah</TableBodyCell>
-                <TableBodyCell>Brown</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>dduck</TableBodyCell>
-                <TableBodyCell>Donald</TableBodyCell>     
-                <TableBodyCell>Duck</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>mmouse</TableBodyCell>
-                <TableBodyCell>Minnie</TableBodyCell>     
-                <TableBodyCell>Mouse</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
+            {#each users as user}
+                <TableBodyRow>
+                    <TableBodyCell>{user.username}</TableBodyCell>
+                    <TableBodyCell>{user.firstName}</TableBodyCell>     
+                    <TableBodyCell>{user.lastName}</TableBodyCell>
+                    <TableBodyCell><Button on:click={deleteClickHandler}><CloseCircleSolid on:click={deleteClickHandler} id={user.username}></CloseCircleSolid></Button></TableBodyCell>
+                </TableBodyRow>
+            {/each}
         </TableBody>
     </Table>
 </div>

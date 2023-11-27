@@ -1,11 +1,18 @@
 <script lang="ts">
     import type { Product } from '$lib/product';
-    import { Heading, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+    import { Heading, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Button } from 'flowbite-svelte';
     import { CloseCircleSolid } from "flowbite-svelte-icons";
-    let products: Product[] = [];
+    import { createEventDispatcher } from 'svelte';
 
-    function deleteClickHandler() {
-        console.log("Delete button clicked");
+    const dispatch = createEventDispatcher();
+
+    export let products: Product[] = [];
+
+    function deleteClickHandler(event: any) {
+        console.log("Delete button clicked: ", event.target);
+        dispatch('deleteProduct', {
+            id: event.target.id
+        });
     }
 </script>
 
@@ -19,27 +26,15 @@
             <TableHeadCell>Price</TableHeadCell>
         </TableHead>
         <TableBody>
-            <TableBodyRow>
-                <TableBodyCell>0</TableBodyCell>
-                <TableBodyCell>Apple MacBook Pro 17"</TableBodyCell>     
-                <TableBodyCell>10</TableBodyCell>
-                <TableBodyCell>$2999</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>1</TableBodyCell>
-                <TableBodyCell>Microsoft Surface Pro</TableBodyCell>
-                <TableBodyCell>5</TableBodyCell>
-                <TableBodyCell>$1999</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>2</TableBodyCell>
-                <TableBodyCell>Magic Mouse 2</TableBodyCell>     
-                <TableBodyCell>90</TableBodyCell>
-                <TableBodyCell>$99</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
+            {#each products as product}
+                <TableBodyRow>
+                    <TableBodyCell>{product.id}</TableBodyCell>
+                    <TableBodyCell>{product.name}</TableBodyCell>     
+                    <TableBodyCell>{product.quantity}</TableBodyCell>
+                    <TableBodyCell>{product.price}</TableBodyCell>
+                    <TableBodyCell><Button on:click={deleteClickHandler} id={product.id}><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></Button></TableBodyCell>
+                </TableBodyRow>
+            {/each}
         </TableBody>
     </Table>
 </div>
